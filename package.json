@@ -1,0 +1,53 @@
+{
+  "name": "nuxt-memwatch",
+  "version": "0.1.0",
+  "description": "Quickly watch real-time memory stats of your nuxt app",
+  "main": "lib/module.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "dev": "nuxt dev example",
+    "build": "nuxt build example",
+    "start": "nuxt start example",
+    "lint": "eslint lib",
+    "release": "yarn lint && standard-version"
+  },
+  "keywords": [
+    "memwatch",
+    "memory",
+    "leak",
+    "statistics",
+    "heap",
+    "dump",
+    "nuxt",
+    "module",
+    "nuxt-module"
+  ],
+  "author": "pimlie <pimlie@hotmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "node-memwatcher": "^0.1.1",
+    "std-env": "^2.2.1"
+  },
+  "devDependencies": {
+    "@airbnb/node-memwatch": "^1.0.2",
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.3.4",
+    "@nuxtjs/eslint-config": "^0.0.1",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.1.0",
+    "babel-plugin-dynamic-import-node": "^2.2.0",
+    "eslint": "^5.14.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.3.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^5.2.2",
+    "jest": "^24.1.0",
+    "nuxt": "^2.4.5"
+  }
+}
