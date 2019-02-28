@@ -48,6 +48,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^5.2.2",
     "jest": "^24.1.0",
-    "nuxt": "^2.4.5"
+    "nuxt": "^2.4.5",
+    "standard-version": "^5.0.1"
   }
 }
