@@ -2,9 +2,11 @@
 [![npm](https://img.shields.io/npm/dt/nuxt-memwatch.svg?style=flat-square)](https://www.npmjs.com/package/nuxt-memwatch)
 [![npm (scoped with tag)](https://img.shields.io/npm/v/nuxt-memwatch/latest.svg?style=flat-square)](https://www.npmjs.com/package/nuxt-memwatch)
 
-## Why and when do you use this module
+## Introduction
 
-Other tools may provide the same or better functionality, but this module is probably the quickest way to get more insights in the memory usage of your nuxt server. Especially when using the node-memwatch peer dependency it could help you track down memory leaks. See [node-memwatcher](https://github.com/pimlie/node-memwatcher) and [node-memwatch](https://github.com/airbnb/node-memwatch) readme's for more information
+This module gives you better insights in the heap usages of your nuxt server. Especially when using the node-memwatch peer dependency it can be used to help track down memory leaks. This module uses [node-memwatcher](https://github.com/pimlie/node-memwatcher) and [node-memwatch](https://github.com/airbnb/node-memwatch), see their readme's for more information
+
+Allthough other tools may provide the same or better functionality, this module is probably the quickest.
 
 <p align="center"><img src="./assets/demo.gif" alt="nuxt-memwatch demo"/></p>
 
@@ -28,7 +30,7 @@ yarn add @airbnb/node-memwatch
 ##### Add `nuxt-memwatch` to `modules` section of `nuxt.config.js`
 ```js
   modules: [
-    ['nuxt-memwatch', { graph: false }],
+    ['nuxt-memwatch', { averages: true }],
   ]
 ```
 or 
@@ -37,6 +39,7 @@ or
     'nuxt-memwatch'
   ],
   memwatch: {
+    graph: true,
     graphSetup(setup) {
       setup.metrics.malloc = {
         aggregator: 'avg',
@@ -51,7 +54,15 @@ or
 
 ## Example
 
-You can run the included example by cloning this repo, run `yarn install && yarn build` and finally `yarn start`. Then generate some requests by running `ab -c100 -n100000 http://127.0.0.1:3000/`, this example uses max ~1.3GB of memory which is fine-tuned for node's default heap size limit of 1.5GB
+You can run the included example by cloning this repo, run `yarn install && yarn build` and finally `yarn start`. Then generate some requests by running `ab -c100 -n100000 http://127.0.0.1:3000/`, this example uses max ~1.3GB of memory which is fine-tuned for node's default heap size limit of 1.5GB (more specifically, 1.5GB is the default limit of the old space)
+
+## Running in development mode
+
+Nuxt is not running (memory) 'optimised' in development mode. Memory leaks are likely so although its' possible to use this module in development mode it is not recommended.
+
+## FAQ
+
+Please check the [node-memwatcher FAQ](https://github.com/pimlie/node-memwatcher/wiki/FAQ)
 
 ## Module Options
 
@@ -65,7 +76,7 @@ If set to a number larger then 0, we will force the gc to run after this number 
 
 #### `nuxtHook` _string_ (listen)
 
-Normally we are interested in memory usage when nuxt is serving requests, so we start listening for stats events on the listen hook. If you are running this module in development mode, we listen for `build:done` instead if you dont change this value. You can probably leave this to the default, but if you want to debug the nuxt generate command you could do:
+Memory leaks and heap usages are probably mostly interesting when the nuxt server is running and serving requests. Therefore we start listening for stats events on the listen hook, unless you are running this module in development mode, then we listen for `build:done` instead (when you havent change this value). If e.g you would like to debug `nuxt generate` you could do:
 
 ```js
 // nuxt.config.js
@@ -84,11 +95,13 @@ export default {
       async before() {
         memwatch = await getMemwatch()
       },
-      page() {
+      routeCreated() {
         // this probably wont work as you expect
-        // as node will probably be too busy generating pages
-        // and the gc will only run after
-        // generate.concurrency routes have finished
+        // as node/v8 will probably be too busy to run the gc
+        // but more importantly there is not really a nuxt hook
+        // available to do this in the right place
+        // This does work however, but the gc call at route `n`
+        // can only clear memory usage by previous routes `< n`
         memwatch.gc()
       }
     }
