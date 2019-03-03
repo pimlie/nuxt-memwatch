@@ -72,7 +72,7 @@ Besides the default [node-memwatcher options](https://github.com/pimlie/node-mem
 
 If set to a number larger then 0, we will force the gc to run after this number of requests. E.g. when set to 1 the gc runs after every request
 
-> :fire: This only works when you have either installed the peerDependency or are running node with `--expose_gc`
+> :fire: This only works when you have either installed the peer dependency or are running node with `--expose_gc`
 
 #### `nuxtHook` _string_ (listen)
 
