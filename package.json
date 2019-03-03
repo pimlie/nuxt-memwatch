@@ -27,7 +27,7 @@
   "author": "pimlie <pimlie@hotmail.com>",
   "license": "MIT",
   "dependencies": {
-    "node-memwatcher": "^0.1.1",
+    "node-memwatcher": "^0.1.2",
     "std-env": "^2.2.1"
   },
   "devDependencies": {
@@ -39,7 +39,7 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.1.0",
     "babel-plugin-dynamic-import-node": "^2.2.0",
-    "eslint": "^5.14.1",
+    "eslint": "^5.15.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jest": "^22.3.0",
